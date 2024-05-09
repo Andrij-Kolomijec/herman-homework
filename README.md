@@ -5,8 +5,8 @@
 ### Výsledný kód
 
 1. Je validní dle W3C.
-2. Je přístupný dle WCAG 2.1.
-3. Je responzivní do telefonu až po desktop.
+2. Je přístupný alespoň dle WCAG 2.1.
+3. Je responzivní telefon—desktop.
 4. Je optimalizovaný pro výkon a rychlé načítání (efektivní práce s daty).
 5. Je statický a splňuje funkční požadavky.
 
@@ -18,19 +18,21 @@
 ### Funkční požadavky
 
 1. Galerie funguje a zobrazuje se v posledních dvou verzích nejrozšířenějších prohlížečů.
-2. Mapa dynamicky zobrazuje polohy všech obrázků ve viewportu.
+2. Mapa dynamicky zobrazuje polohy všech obrázků ve viewportu. Při scrollování není žádoucí odstraňování markerů, uživatel má mít 
+možnost se klikem n amarker vrátit na obrázek.
+3. Při scrollu posouvat mapu, aby byly vidět markery z aktuálního viewportu.
 
 Volitelně:
 
-- Pokud data obsahují informace o směru (azimutu), zobrazte je.
 - Zobrazte cestu nebo trasu mezi jednotlivými body jako simulaci fyzického přemísťování mezi lokacemi.
+- Pokud data obsahují informace o směru (azimutu), zobrazte je.
 
 ## Poznámky
 
 > Zamyslete se nad tím, jak bude uživatel galerii ovládat. Jaká jsou očekávání uživatele od galerie obrázků.
 
 - Preferováno použití HTML5, CSS, JS…
-- Volitelně: použití frameworků, preprocesorů atp.
+- Frameworky jako React nejsou povoleny, zdržují a svazují. Pište čistý funkční kód.
 - Doporučení: knihovna `leaflet` pro mapové podklady.
 - Doporučení: knihovna `exifr` pro práci s metadaty.
 
