@@ -1,4 +1,5 @@
 import exifr from "exifr";
+import openImageOverlay from "../utils/imageOverlay";
 
 const markerDefault = L.icon({
   iconUrl: "marker-default.svg",
@@ -30,7 +31,22 @@ export default async function generateMarkers(L, map, images) {
               markerElement.dataset.index = index;
             }
           })
-          .addTo(map);
+          .addTo(map)
+          .on("click", function () {
+            document
+              .querySelector(".marker-selected")
+              ?.classList.remove("marker-selected");
+
+            openImageOverlay(images[index], image.latitude, image.longitude);
+            map.setView([image.latitude, image.longitude], 18);
+            document.querySelectorAll(".marker-in-view").forEach((marker) => {
+              marker.classList.remove("marker-in-view");
+            });
+            const markerElement = marker.getElement();
+            if (markerElement) {
+              markerElement.classList.add("marker-selected");
+            }
+          });
 
         if (image.ImageDescription) {
           marker.bindPopup(image.ImageDescription);
