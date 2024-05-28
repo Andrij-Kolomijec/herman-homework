@@ -6,11 +6,13 @@ import fetchImageUrls from "./utils/imageData";
 import sortImages from "./utils/sortImages";
 import highlightVisibleMarkers from "./utils/highlightVisibleMarkers";
 
+let sortedImageUrls;
+
 async function initializeApp() {
   try {
     const images = await fetchImageUrls();
 
-    const sortedImageUrls = await sortImages(images);
+    sortedImageUrls = await sortImages(images);
 
     displayImages(sortedImageUrls);
     generateMarkers(L, map, sortedImageUrls);
@@ -21,6 +23,6 @@ async function initializeApp() {
 
 document
   .querySelector("#gallery-wrapper")
-  .addEventListener("scroll", highlightVisibleMarkers);
+  .addEventListener("scroll", () => highlightVisibleMarkers(sortedImageUrls));
 
 initializeApp();
