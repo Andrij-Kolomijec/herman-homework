@@ -1,4 +1,4 @@
-const map = L.map("map").setView([32, 35], 8);
+const map = L.map("map").setView([32, 35.5], 8);
 
 const osm = L.tileLayer(import.meta.env.VITE_PORT_MAPTILER, {
   attribution: import.meta.env.VITE_PORT_LICENSE,
@@ -25,12 +25,6 @@ const StadiaOSMBright = L.tileLayer(
     ext: "png",
   }
 );
-
-// const mapdata = L.geoJSON(mapdata, {
-//   pointToLayer: function (feature, latlng) {
-//     return L.circleMarker(latlng, markerOptions);
-//   },
-// }).addTo(map);
 
 const baseMaps = {
   Default: StadiaOSMBright,

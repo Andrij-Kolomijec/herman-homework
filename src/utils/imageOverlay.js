@@ -8,7 +8,7 @@ function closeImageOverlay() {
   galleryWrapper.style.overflow = "auto";
   document
     .querySelector(".marker-selected")
-    .classList.remove("marker-selected");
+    ?.classList.remove("marker-selected");
 }
 
 export default function openImageOverlay(url, latitude, longitude) {
