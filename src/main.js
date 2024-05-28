@@ -3,17 +3,24 @@ import displayImages from "./components/gallery";
 import generateMarkers from "./utils/generateMarkers";
 import map from "./components/map";
 import fetchImageUrls from "./utils/imageData";
+import sortImages from "./utils/sortImages";
+import highlightVisibleMarkers from "./utils/highlightVisibleMarkers";
 
 async function initializeApp() {
   try {
     const images = await fetchImageUrls();
 
-    displayImages(images);
+    const sortedImageUrls = await sortImages(images);
 
-    generateMarkers(L, map, images);
+    displayImages(sortedImageUrls);
+    generateMarkers(L, map, sortedImageUrls);
   } catch (error) {
     console.error("Error initializing app:", error);
   }
 }
+
+document
+  .querySelector("#gallery-wrapper")
+  .addEventListener("scroll", highlightVisibleMarkers);
 
 initializeApp();
