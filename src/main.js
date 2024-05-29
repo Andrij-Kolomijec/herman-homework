@@ -25,4 +25,4 @@ document
 
 initializeApp();
 
-setTimeout(highlightVisibleMarkers, 2000);
+setTimeout(highlightVisibleMarkers, 3000);
