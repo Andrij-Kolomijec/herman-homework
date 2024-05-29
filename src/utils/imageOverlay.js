@@ -2,6 +2,7 @@ import map from "../components/map";
 
 const galleryWrapper = document.getElementById("gallery-wrapper");
 const overlay = document.getElementById("image-overlay");
+let savedScrollTop = 0;
 
 function closeImageOverlay() {
   overlay.style.display = "none";
@@ -11,8 +12,9 @@ function closeImageOverlay() {
     ?.classList.remove("marker-selected");
 }
 
-export default function openImageOverlay(url, latitude, longitude) {
+export default function openImageOverlay(url, index, latitude, longitude) {
   overlay.innerHTML = "";
+  savedScrollTop = galleryWrapper.scrollTop;
 
   const img = document.createElement("img");
   img.src = url;
@@ -30,15 +32,71 @@ export default function openImageOverlay(url, latitude, longitude) {
     window.open(url, "_blank");
   });
 
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "Previous";
+  prevButton.className = "prev-button";
+  prevButton.addEventListener("click", () => prevImage(index));
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "Next";
+  nextButton.className = "next-button";
+  nextButton.addEventListener("click", () => nextImage(index));
+
+  overlay.appendChild(prevButton);
+  overlay.appendChild(nextButton);
   overlay.appendChild(closeButton);
   overlay.appendChild(viewOriginalButton);
   galleryWrapper.appendChild(overlay);
 
-  galleryWrapper.scrollTo({
-    top: 0,
-  });
-
   overlay.style.display = "flex";
   galleryWrapper.style.overflow = "hidden";
+  overlay.style.top = `${savedScrollTop}px`;
   map.setView([latitude, longitude], 18);
+}
+
+async function nextImage(index) {
+  const images = [...galleryWrapper.querySelectorAll("img")];
+  if (index < images.length - 2) {
+    const nextImage = galleryWrapper.querySelector(
+      `[data-index='${index + 1}']`
+    );
+    openImageOverlay(
+      nextImage.dataset.src,
+      index + 1,
+      nextImage.dataset.latitude,
+      nextImage.dataset.longitude
+    );
+    const prevMarker = document
+      .querySelector("#map")
+      .querySelector(`[data-index="${index}"]`);
+    prevMarker.classList.remove("marker-selected");
+
+    const currentMarker = document
+      .querySelector("#map")
+      .querySelector(`[data-index="${index + 1}"]`);
+    currentMarker.classList.add("marker-selected");
+  }
+}
+
+async function prevImage(index) {
+  if (index > 0) {
+    const nextImage = galleryWrapper.querySelector(
+      `[data-index='${index - 1}']`
+    );
+    openImageOverlay(
+      nextImage.dataset.src,
+      index - 1,
+      nextImage.dataset.latitude,
+      nextImage.dataset.longitude
+    );
+    const prevMarker = document
+      .querySelector("#map")
+      .querySelector(`[data-index="${index}"]`);
+    prevMarker.classList.remove("marker-selected");
+
+    const currentMarker = document
+      .querySelector("#map")
+      .querySelector(`[data-index="${index - 1}"]`);
+    currentMarker.classList.add("marker-selected");
+  }
 }
