@@ -1,5 +1,7 @@
 # Úkol: Interaktivní galerie obrázků se zobrazením polohy na mapě
 
+## Náhled mého řešení je k dispozici [zde](https://photo-map.netlify.app/).
+
 ## Akceptační kritéria
 
 ### Výsledný kód
@@ -18,8 +20,8 @@
 ### Funkční požadavky
 
 1. Galerie funguje a zobrazuje se v posledních dvou verzích nejrozšířenějších prohlížečů.
-2. Mapa dynamicky zobrazuje polohy všech obrázků ve viewportu. Při scrollování není žádoucí odstraňování markerů, uživatel má mít 
-možnost se klikem n amarker vrátit na obrázek.
+2. Mapa dynamicky zobrazuje polohy všech obrázků ve viewportu. Při scrollování není žádoucí odstraňování markerů, uživatel má mít
+   možnost se klikem n amarker vrátit na obrázek.
 3. Při scrollu posouvat mapu, aby byly vidět markery z aktuálního viewportu.
 
 Volitelně:
