@@ -6,6 +6,23 @@ const markerDefault = L.icon({
   iconSize: [32, 32],
 });
 
+function triggerMarkerClick(map, url, marker, index, latitude, longitude) {
+  document
+    .querySelector(".marker-selected")
+    ?.classList.remove("marker-selected");
+
+  openImageOverlay(url, index, latitude, longitude);
+  map.setView([latitude, longitude], 18);
+  document.querySelectorAll(".marker-in-view").forEach((marker) => {
+    marker.classList.remove("marker-in-view");
+  });
+
+  const markerElement = marker.getElement();
+  if (markerElement) {
+    markerElement.classList.add("marker-selected");
+  }
+}
+
 export default async function generateMarkers(L, map, images) {
   try {
     const imageMetadata = [];
@@ -27,27 +44,33 @@ export default async function generateMarkers(L, map, images) {
         marker
           .on("add", function () {
             const markerElement = marker.getElement();
-            if (markerElement) {
-              markerElement.dataset.index = index;
-              markerElement.dataset.latitude = image.latitude;
-              markerElement.dataset.longitude = image.longitude;
-            }
+
+            markerElement.dataset.index = index;
+            markerElement.dataset.latitude = image.latitude;
+            markerElement.dataset.longitude = image.longitude;
+            markerElement.addEventListener("keydown", function (e) {
+              if (e.key === "Enter") {
+                triggerMarkerClick(
+                  map,
+                  images[index],
+                  marker,
+                  index,
+                  image.latitude,
+                  image.longitude
+                );
+              }
+            });
           })
           .addTo(map)
           .on("click", function () {
-            document
-              .querySelector(".marker-selected")
-              ?.classList.remove("marker-selected");
-
-            openImageOverlay(images[index], image.latitude, image.longitude);
-            map.setView([image.latitude, image.longitude], 18);
-            document.querySelectorAll(".marker-in-view").forEach((marker) => {
-              marker.classList.remove("marker-in-view");
-            });
-            const markerElement = marker.getElement();
-            if (markerElement) {
-              markerElement.classList.add("marker-selected");
-            }
+            triggerMarkerClick(
+              map,
+              images[index],
+              marker,
+              index,
+              image.latitude,
+              image.longitude
+            );
           });
 
         if (image.ImageDescription) {

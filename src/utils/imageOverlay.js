@@ -52,6 +52,8 @@ export default function openImageOverlay(url, index, latitude, longitude) {
   galleryWrapper.style.overflow = "hidden";
   overlay.style.top = `${savedScrollTop}px`;
   map.setView([latitude, longitude], 18);
+
+  document.addEventListener("keydown", (e) => handleKeyDown(e, index));
 }
 
 async function nextImage(index) {
@@ -66,10 +68,9 @@ async function nextImage(index) {
       nextImage.dataset.latitude,
       nextImage.dataset.longitude
     );
-    const prevMarker = document
-      .querySelector("#map")
-      .querySelector(`[data-index="${index}"]`);
-    prevMarker.classList.remove("marker-selected");
+    document
+      .querySelector(".marker-selected")
+      ?.classList.remove("marker-selected");
 
     const currentMarker = document
       .querySelector("#map")
@@ -89,14 +90,24 @@ async function prevImage(index) {
       nextImage.dataset.latitude,
       nextImage.dataset.longitude
     );
-    const prevMarker = document
-      .querySelector("#map")
-      .querySelector(`[data-index="${index}"]`);
-    prevMarker.classList.remove("marker-selected");
+    document
+      .querySelector(".marker-selected")
+      ?.classList.remove("marker-selected");
 
     const currentMarker = document
       .querySelector("#map")
       .querySelector(`[data-index="${index - 1}"]`);
     currentMarker.classList.add("marker-selected");
+  }
+}
+
+function handleKeyDown(event, index) {
+  const { key } = event;
+  if (key === "Escape") {
+    closeImageOverlay();
+  } else if (key === "ArrowLeft") {
+    prevImage(index);
+  } else if (key === "ArrowRight") {
+    nextImage(index);
   }
 }

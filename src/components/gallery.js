@@ -1,6 +1,20 @@
 import exifr from "exifr";
 import openImageOverlay from "../utils/imageOverlay";
 
+function triggerImageClick(event, url, index, latitude, longitude) {
+  event.preventDefault();
+  openImageOverlay(url, index, latitude, longitude);
+  document.querySelectorAll(".marker-in-view").forEach((marker) => {
+    marker.classList.remove("marker-in-view");
+  });
+  const marker = document
+    .querySelector("#map")
+    .querySelector(`[data-index="${index}"]`);
+  if (marker) {
+    marker.classList.add("marker-selected");
+  }
+}
+
 export default async function displayImages(images) {
   const gallery = document.querySelector("#gallery");
 
@@ -18,18 +32,26 @@ export default async function displayImages(images) {
         const metadata = await exifr.parse(url);
         img.dataset.latitude = metadata.latitude;
         img.dataset.longitude = metadata.longitude;
+        img.setAttribute("tabindex", "0");
         img.dataset.src = url;
         img.addEventListener("click", (event) => {
-          event.preventDefault();
-          openImageOverlay(url, index, metadata.latitude, metadata.longitude);
-          document.querySelectorAll(".marker-in-view").forEach((marker) => {
-            marker.classList.remove("marker-in-view");
-          });
-          const marker = document
-            .querySelector("#map")
-            .querySelector(`[data-index="${index}"]`);
-          if (marker) {
-            marker.classList.add("marker-selected");
+          triggerImageClick(
+            event,
+            url,
+            index,
+            metadata.latitude,
+            metadata.longitude
+          );
+        });
+        img.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            triggerImageClick(
+              event,
+              url,
+              index,
+              metadata.latitude,
+              metadata.longitude
+            );
           }
         });
 
