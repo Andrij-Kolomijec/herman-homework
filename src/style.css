@@ -39,7 +39,9 @@ body {
 }
 
 #image-overlay .close-button,
-#image-overlay .view-original-button {
+#image-overlay .view-original-button,
+#image-overlay .prev-button,
+#image-overlay .next-button {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -64,25 +66,17 @@ body {
 
 #image-overlay .prev-button,
 #image-overlay .next-button {
-  position: absolute;
-  background: antiquewhite;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 1001;
+  top: auto;
   width: 83px;
+  bottom: 5%;
 }
 
 #image-overlay .prev-button {
   left: 40%;
-  bottom: 5%;
 }
 
 #image-overlay .next-button {
   right: 40%;
-  bottom: 5%;
 }
 
 #image-overlay .prev-button:hover,
@@ -166,6 +160,26 @@ body {
   #map {
     flex: none;
     height: 30vh;
+  }
+
+  #image-overlay img {
+    max-width: 80%;
+    max-height: 70%;
+  }
+
+  #image-overlay .prev-button {
+    left: 20px;
+  }
+
+  #image-overlay .next-button {
+    right: 20px;
+  }
+
+  #image-overlay .close-button,
+  #image-overlay .view-original-button,
+  #image-overlay .prev-button,
+  #image-overlay .next-button {
+    padding: 5px;
   }
 }
 
