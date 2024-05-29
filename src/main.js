@@ -3,16 +3,14 @@ import displayImages from "./components/gallery";
 import generateMarkers from "./utils/generateMarkers";
 import map from "./components/map";
 import fetchImageUrls from "./utils/imageData";
-import sortImages from "./utils/sortImages";
+import sortImagesByCreationDate from "./utils/sortImagesByCreationDate";
 import highlightVisibleMarkers from "./utils/highlightVisibleMarkers";
-
-let sortedImageUrls;
 
 async function initializeApp() {
   try {
     const images = await fetchImageUrls();
 
-    sortedImageUrls = await sortImages(images);
+    const sortedImageUrls = await sortImagesByCreationDate(images);
 
     displayImages(sortedImageUrls);
     generateMarkers(L, map, sortedImageUrls);
@@ -23,6 +21,8 @@ async function initializeApp() {
 
 document
   .querySelector("#gallery-wrapper")
-  .addEventListener("scroll", () => highlightVisibleMarkers(sortedImageUrls));
+  .addEventListener("scroll", highlightVisibleMarkers);
 
 initializeApp();
+
+setTimeout(highlightVisibleMarkers, 2000);
