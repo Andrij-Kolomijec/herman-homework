@@ -1,8 +1,9 @@
 const map = L.map("map").setView([32, 35.5], 8);
 
-const osm = L.tileLayer(import.meta.env.VITE_PORT_MAPTILER, {
-  attribution: import.meta.env.VITE_PORT_LICENSE,
-}).addTo(map);
+const osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+});
 
 const StadiaAlidadeSatellite = L.tileLayer(
   "https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}",
@@ -24,7 +25,7 @@ const StadiaOSMBright = L.tileLayer(
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     ext: "png",
   }
-);
+).addTo(map);
 
 const baseMaps = {
   Default: StadiaOSMBright,
