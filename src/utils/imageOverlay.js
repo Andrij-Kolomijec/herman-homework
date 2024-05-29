@@ -23,11 +23,17 @@ export default function openImageOverlay(url, index, latitude, longitude) {
   const closeButton = document.createElement("button");
   closeButton.textContent = "Close";
   closeButton.className = "close-button";
+  closeButton.role = "button";
+  closeButton.ariaPressed = "false";
+  closeButton.ariaLabel = "Close Image Overlay Button";
   closeButton.addEventListener("click", closeImageOverlay);
 
   const viewOriginalButton = document.createElement("button");
   viewOriginalButton.textContent = "View Original";
   viewOriginalButton.className = "view-original-button";
+  viewOriginalButton.role = "button";
+  viewOriginalButton.ariaPressed = "false";
+  viewOriginalButton.ariaLabel = "View Original Image Button";
   viewOriginalButton.addEventListener("click", () => {
     window.open(url, "_blank");
   });
@@ -35,11 +41,17 @@ export default function openImageOverlay(url, index, latitude, longitude) {
   const prevButton = document.createElement("button");
   prevButton.textContent = "Previous";
   prevButton.className = "prev-button";
+  prevButton.role = "button";
+  prevButton.ariaPressed = "false";
+  prevButton.ariaLabel = "Show Previous Image Button";
   prevButton.addEventListener("click", () => prevImage(index));
 
   const nextButton = document.createElement("button");
   nextButton.textContent = "Next";
   nextButton.className = "next-button";
+  nextButton.role = "button";
+  nextButton.ariaPressed = "false";
+  nextButton.ariaLabel = "Show Next Image Button";
   nextButton.addEventListener("click", () => nextImage(index));
 
   overlay.appendChild(prevButton);
