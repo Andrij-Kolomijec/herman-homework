@@ -5,6 +5,7 @@
 
 :root {
   --purple: #6f15a5;
+  --shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -14,7 +15,6 @@ body {
 
 #gallery-wrapper {
   flex: 2;
-  /* height: 100vh; */
   overflow: auto;
   background-color: antiquewhite;
   position: relative;
@@ -62,6 +62,34 @@ body {
   scale: 1.1;
 }
 
+#image-overlay .prev-button,
+#image-overlay .next-button {
+  position: absolute;
+  background: antiquewhite;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1001;
+  width: 83px;
+}
+
+#image-overlay .prev-button {
+  left: 40%;
+  bottom: 5%;
+}
+
+#image-overlay .next-button {
+  right: 40%;
+  bottom: 5%;
+}
+
+#image-overlay .prev-button:hover,
+#image-overlay .next-button:hover {
+  scale: 1.1;
+}
+
 #gallery {
   max-width: 100%;
   row-gap: 2vh;
@@ -71,21 +99,12 @@ body {
   place-items: center;
 }
 
-/* #gallery a {
-  height: calc((100vh - 8vh) / 4);
-  object-fit: cover;
-  width: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 #gallery img {
-  /* max-height: calc((100vh - 8vh) / 3); */
   object-fit: cover;
   cursor: pointer;
   filter: brightness(0.9) saturate(0.9);
   transition: filter 0.2s ease-in-out, scale 0.2s ease-in-out;
+  box-shadow: var(--shadow);
 }
 
 #gallery img:hover {
@@ -95,21 +114,6 @@ body {
 
 #map {
   flex: 1;
-}
-
-.marker-cluster {
-  height: 2rem;
-  width: 2rem;
-  background-color: var(--purple);
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-  transform: translate(-50%, -50%);
-  color: antiquewhite;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .marker-in-view {
@@ -126,5 +130,49 @@ body {
   html {
     scrollbar-color: var(--purple) antiquewhite;
     scrollbar-width: thin;
+  }
+}
+
+@media (max-width: 1270px) {
+  #image-overlay .prev-button {
+    left: 30%;
+  }
+
+  #image-overlay .next-button {
+    right: 30%;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  #gallery-wrapper {
+    flex: none;
+    /*overflow: auto;
+    background-color: antiquewhite;
+    position: relative; */
+    height: 70vh;
+  }
+
+  #gallery {
+    max-width: 100%;
+    row-gap: 3rem;
+    padding: 1vh;
+
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 450px) {
+  #gallery {
+    max-width: 100%;
+    row-gap: 3rem;
+    padding: 1vh;
+
+    grid-template-columns: repeat(1, minmax(100px, 1fr));
   }
 }
