@@ -152,9 +152,6 @@ body {
 
   #gallery-wrapper {
     flex: none;
-    /*overflow: auto;
-    background-color: antiquewhite;
-    position: relative; */
     height: 70vh;
   }
 
@@ -164,6 +161,11 @@ body {
     padding: 1vh;
 
     grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+
+  #map {
+    flex: none;
+    height: 30vh;
   }
 }
 
